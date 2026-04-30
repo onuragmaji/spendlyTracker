@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(git init:*)",
-      "Bash(pip install:*)"
+      "Bash(pip install:*)",
+      "Bash(./venv/bin/python -c \"from app import app; print\\('second import OK'\\)\")",
+      "Bash(sqlite3 spendly.db \"SELECT COUNT\\(*\\) AS users FROM users; SELECT COUNT\\(*\\) AS expenses FROM expenses;\")"
     ]
   }
 }
