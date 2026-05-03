@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Profile — Spendly{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-page">
+
+  <div class="profile-header">
+    <span class="profile-badge">Account</span>
+    <h1 class="profile-title">Your Profile</h1>
+    <p class="profile-subtitle">Account details and spending overview</p>
+  </div>
+
+  <div class="profile-body">
+
+    <aside class="profile-sidebar">
+      <div class="profile-card">
+        <div class="profile-avatar">{{ user.name[0] | upper }}</div>
+        <h2 class="profile-name">{{ user.name }}</h2>
+        <p class="profile-email">{{ user.email }}</p>
+        <div class="profile-divider"></div>
+        <dl class="profile-meta">
+          <dt class="profile-meta-label">Member since</dt>
+          <dd class="profile-meta-value">{{ member_since }}</dd>
+        </dl>
+      </div>
+    </aside>
+
+    <section class="profile-main">
+
+      <div class="profile-tiles">
+        <div class="profile-tile">
+          <span class="profile-tile-label">Total expenses</span>
+          <span class="profile-tile-value">{{ stats.total_count }}</span>
+        </div>
+        <div class="profile-tile profile-tile-accent">
+          <span class="profile-tile-label">Total spent</span>
+          <span class="profile-tile-value">₹{{ "%.2f"|format(stats.total_amount) }}</span>
+        </div>
+      </div>
+
+      <div class="profile-section">
+        <h3 class="profile-section-title">Spending by category</h3>
+        {% if stats.by_category %}
+        <div class="profile-table-wrap">
+          <table class="profile-table">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th class="align-right">Transactions</th>
+                <th class="align-right">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in stats.by_category %}
+              <tr>
+                <td><span class="cat-pill">{{ row.category }}</span></td>
+                <td class="align-right">{{ row.count }}</td>
+                <td class="align-right">₹{{ "%.2f"|format(row.subtotal) }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="profile-empty">
+          <p class="profile-empty-text">No expenses recorded yet.</p>
+        </div>
+        {% endif %}
+      </div>
+
+    </section>
+  </div>
+</div>
+{% endblock %}

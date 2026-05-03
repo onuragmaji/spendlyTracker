@@ -1,9 +1,17 @@
 import sqlite3
+from datetime import datetime
 
 from flask import Flask, abort, redirect, render_template, request, session, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from database.db import create_user, get_user_by_email, init_db, seed_db
+from database.db import (
+    create_user,
+    get_expense_stats,
+    get_user_by_id,
+    get_user_by_email,
+    init_db,
+    seed_db,
+)
 
 app = Flask(__name__)
 app.secret_key = "dev-secret-change-in-prod"
@@ -69,7 +77,7 @@ def login():
     session.clear()
     session["user_id"] = user["id"]
     session["user_name"] = user["name"]
-    return redirect(url_for("landing"))
+    return redirect(url_for("profile"))
 
 
 @app.route("/terms")
@@ -94,7 +102,23 @@ def logout():
 
 @app.route("/profile")
 def profile():
-    return "Profile page — coming in Step 4"
+    if not session.get("user_id"):
+        return redirect(url_for("login"))
+
+    user  = get_user_by_id(session["user_id"])
+    stats = get_expense_stats(session["user_id"])
+
+    raw = user["created_at"]
+    for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"):
+        try:
+            member_since = datetime.strptime(raw, fmt).strftime("%-d %B %Y")
+            break
+        except ValueError:
+            continue
+    else:
+        member_since = raw
+
+    return render_template("profile.html", user=user, stats=stats, member_since=member_since)
 
 
 @app.route("/expenses/add")

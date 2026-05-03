@@ -1,0 +1,301 @@
+/* ------------------------------------------------------------------ */
+/* Profile page                                                         */
+/* ------------------------------------------------------------------ */
+
+.profile-page {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 2rem 5rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Header band                                                          */
+/* ------------------------------------------------------------------ */
+
+.profile-header {
+    padding: 3.5rem 0 2.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.profile-badge {
+    display: inline-block;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    width: fit-content;
+    margin-bottom: 0.5rem;
+}
+
+.profile-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    color: var(--ink);
+}
+
+.profile-subtitle {
+    font-size: 1rem;
+    color: var(--ink-muted);
+}
+
+/* ------------------------------------------------------------------ */
+/* Two-column layout                                                    */
+/* ------------------------------------------------------------------ */
+
+.profile-body {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+/* ------------------------------------------------------------------ */
+/* Sidebar — identity card                                             */
+/* ------------------------------------------------------------------ */
+
+.profile-sidebar {
+    position: sticky;
+    top: 80px;
+}
+
+.profile-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 2rem 1.75rem;
+    text-align: center;
+}
+
+.profile-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--paper-card);
+    font-family: var(--font-display);
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+}
+
+.profile-name {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+}
+
+.profile-email {
+    font-size: 0.875rem;
+    color: var(--ink-muted);
+    word-break: break-all;
+}
+
+.profile-divider {
+    height: 1px;
+    background: var(--border-soft);
+    margin: 1.5rem 0;
+}
+
+.profile-meta {
+    text-align: left;
+    margin: 0;
+}
+
+.profile-meta-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 0.3rem;
+}
+
+.profile-meta-value {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    font-weight: 500;
+    margin: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Main content                                                         */
+/* ------------------------------------------------------------------ */
+
+.profile-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Summary tiles */
+.profile-tiles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+}
+
+.profile-tile {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.75rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.profile-tile-accent {
+    background: var(--accent-light);
+    border-color: var(--accent-light);
+}
+
+.profile-tile-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+}
+
+.profile-tile-accent .profile-tile-label {
+    color: var(--accent);
+}
+
+.profile-tile-value {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    color: var(--ink);
+    line-height: 1;
+}
+
+.profile-tile-accent .profile-tile-value {
+    color: var(--accent);
+}
+
+/* Category section */
+.profile-section {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.profile-section-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--ink);
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border-soft);
+    margin: 0;
+}
+
+/* Category table */
+.profile-table-wrap {
+    overflow-x: auto;
+}
+
+.profile-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.profile-table thead th {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    padding: 0.9rem 2rem;
+    text-align: left;
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--border);
+}
+
+.profile-table tbody tr {
+    border-bottom: 1px solid var(--border-soft);
+    transition: background 0.15s;
+}
+
+.profile-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.profile-table tbody tr:hover {
+    background: var(--paper-warm);
+}
+
+.profile-table tbody td {
+    padding: 1rem 2rem;
+    color: var(--ink-soft);
+    vertical-align: middle;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.cat-pill {
+    display: inline-block;
+    background: var(--paper-warm);
+    color: var(--ink-soft);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Empty state */
+.profile-empty {
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+.profile-empty-text {
+    font-size: 0.95rem;
+    color: var(--ink-faint);
+    font-style: italic;
+    margin: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Responsive                                                           */
+/* ------------------------------------------------------------------ */
+
+@media (max-width: 860px) {
+    .profile-body {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-sidebar {
+        position: static;
+    }
+}
+
+@media (max-width: 500px) {
+    .profile-page {
+        padding: 0 1rem 4rem;
+    }
+
+    .profile-tiles {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-table thead th,
+    .profile-table tbody td {
+        padding: 0.75rem 1rem;
+    }
+}
