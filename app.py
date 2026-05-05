@@ -1,16 +1,14 @@
 import sqlite3
-from datetime import datetime
 
 from flask import Flask, abort, redirect, render_template, request, session, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from database.db import (
-    create_user,
-    get_expense_stats,
-    get_user_by_id,
-    get_user_by_email,
-    init_db,
-    seed_db,
+from database.db import create_user, get_user_by_email, init_db, seed_db
+from database.queries import (
+    get_user_by_id as queries_get_user_by_id,
+    get_summary_stats,
+    get_recent_transactions,
+    get_category_breakdown,
 )
 
 app = Flask(__name__)
@@ -105,20 +103,18 @@ def profile():
     if not session.get("user_id"):
         return redirect(url_for("login"))
 
-    user  = get_user_by_id(session["user_id"])
-    stats = get_expense_stats(session["user_id"])
+    user         = queries_get_user_by_id(session["user_id"])
+    summary      = get_summary_stats(session["user_id"])
+    transactions = get_recent_transactions(session["user_id"])
+    breakdown    = get_category_breakdown(session["user_id"])
 
-    raw = user["created_at"]
-    for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"):
-        try:
-            member_since = datetime.strptime(raw, fmt).strftime("%-d %B %Y")
-            break
-        except ValueError:
-            continue
-    else:
-        member_since = raw
-
-    return render_template("profile.html", user=user, stats=stats, member_since=member_since)
+    return render_template(
+        "profile.html",
+        user=user,
+        summary=summary,
+        transactions=transactions,
+        breakdown=breakdown,
+    )
 
 
 @app.route("/expenses/add")
