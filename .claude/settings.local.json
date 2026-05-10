@@ -4,7 +4,14 @@
       "Bash(git init:*)",
       "Bash(pip install:*)",
       "Bash(./venv/bin/python -c \"from app import app; print\\('second import OK'\\)\")",
-      "Bash(sqlite3 spendly.db \"SELECT COUNT\\(*\\) AS users FROM users; SELECT COUNT\\(*\\) AS expenses FROM expenses;\")"
+      "Bash(sqlite3 spendly.db \"SELECT COUNT\\(*\\) AS users FROM users; SELECT COUNT\\(*\\) AS expenses FROM expenses;\")",
+      "Bash(curl -s -c /tmp/spendly.txt -X POST http://127.0.0.1:5001/login -d 'email=demo%40spendly.com&password=demo123' -H 'Content-Type: application/x-www-form-urlencoded' -o /dev/null -w '%{http_code}')",
+      "Bash(curl -s -b /tmp/spendly.txt http://127.0.0.1:5001/profile -o /tmp/profile_all.html -w \"%{http_code}\")",
+      "Bash(curl -s -b /tmp/spendly.txt 'http://127.0.0.1:5001/profile?from_date=not-a-date&to_date=2026-99-99' -o /tmp/profile_invalid.html -w '%{http_code}')",
+      "Read(//tmp/**)",
+      "Bash(node *)",
+      "mcp__sqlite__describe_table",
+      "mcp__sqlite__read_query"
     ]
   }
 }

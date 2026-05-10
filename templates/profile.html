@@ -15,6 +15,26 @@
     <p class="profile-subtitle">Account details and spending overview</p>
   </div>
 
+  <div class="filter-bar">
+    <div class="filter-presets">
+      <button type="button" class="filter-preset-btn" data-preset="this-month">This Month</button>
+      <button type="button" class="filter-preset-btn" data-preset="last-3-months">Last 3 Months</button>
+      <button type="button" class="filter-preset-btn" data-preset="all-time">All Time</button>
+    </div>
+    <form class="filter-form" method="GET" action="{{ url_for('profile') }}">
+      <input type="date" name="from_date" id="from_date" value="{{ from_date }}" class="filter-input">
+      <span class="filter-sep">to</span>
+      <input type="date" name="to_date" id="to_date" value="{{ to_date }}" class="filter-input">
+      <button type="submit" class="filter-apply-btn">Apply</button>
+    </form>
+  </div>
+
+  {% if from_date or to_date %}
+  <p class="filter-active-label">
+    Showing: {{ from_date if from_date else "beginning" }} – {{ to_date if to_date else "today" }}
+  </p>
+  {% endif %}
+
   <div class="profile-body">
 
     <aside class="profile-sidebar">
@@ -112,4 +132,31 @@
     </section>
   </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const fromInput = document.getElementById('from_date');
+  const toInput   = document.getElementById('to_date');
+
+  document.querySelectorAll('.filter-preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const today = new Date();
+      const iso = d => d.toISOString().slice(0, 10);
+
+      if (btn.dataset.preset === 'this-month') {
+        fromInput.value = iso(new Date(today.getFullYear(), today.getMonth(), 1));
+        toInput.value   = iso(today);
+      } else if (btn.dataset.preset === 'last-3-months') {
+        const start = new Date(today.getFullYear(), today.getMonth() - 3, today.getDate());
+        fromInput.value = iso(start);
+        toInput.value   = iso(today);
+      } else {
+        fromInput.value = '';
+        toInput.value   = '';
+      }
+      btn.closest('.filter-bar').querySelector('form').submit();
+    });
+  });
+</script>
 {% endblock %}
