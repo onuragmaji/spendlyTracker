@@ -1,5 +1,0 @@
-[    1827ms] [WARNING] Braze must be initialized before calling methods. @ https://jssdkcdns.mparticle.com/js/v2/eu1-ebd2cad076757c498ce604d818b0d8ae/mparticle.js?env=0&plan_id=gymshark_data_plan_shop:50
-[    1827ms] [WARNING] Braze must be initialized before calling methods. @ https://jssdkcdns.mparticle.com/js/v2/eu1-ebd2cad076757c498ce604d818b0d8ae/mparticle.js?env=0&plan_id=gymshark_data_plan_shop:50
-[    1957ms] [WARNING] Braze must be initialized before calling methods. @ https://jssdkcdns.mparticle.com/js/v2/eu1-ebd2cad076757c498ce604d818b0d8ae/mparticle.js?env=0&plan_id=gymshark_data_plan_shop:50
-[    2277ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://nativesdks.mparticle.com/v1/eu1-ebd2cad076757c498ce604d818b0d8ae/audience?mpid=108855060432110497:0
-[    2277ms] [ERROR] Error retrieving audiences. Error: Uncaught HTTP Error 404. @ https://www.gymshark.com/_next/static/chunks/pages/_app-ce6ae39ebfc2eeb3.js:11
