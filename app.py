@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime
 
 from flask import Flask, abort, redirect, render_template, request, session, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -98,15 +99,26 @@ def logout():
     return redirect(url_for("landing"))
 
 
+def _valid_date(s):
+    try:
+        datetime.strptime(s.strip(), "%Y-%m-%d")
+        return s.strip()
+    except (ValueError, AttributeError):
+        return None
+
+
 @app.route("/profile")
 def profile():
     if not session.get("user_id"):
         return redirect(url_for("login"))
 
+    from_date = _valid_date(request.args.get("from_date", ""))
+    to_date   = _valid_date(request.args.get("to_date", ""))
+
     user         = queries_get_user_by_id(session["user_id"])
-    summary      = get_summary_stats(session["user_id"])
-    transactions = get_recent_transactions(session["user_id"])
-    breakdown    = get_category_breakdown(session["user_id"])
+    summary      = get_summary_stats(session["user_id"], from_date, to_date)
+    transactions = get_recent_transactions(session["user_id"], from_date=from_date, to_date=to_date)
+    breakdown    = get_category_breakdown(session["user_id"], from_date, to_date)
 
     return render_template(
         "profile.html",
@@ -114,6 +126,8 @@ def profile():
         summary=summary,
         transactions=transactions,
         breakdown=breakdown,
+        from_date=from_date or "",
+        to_date=to_date or "",
     )
 
 
