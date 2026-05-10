@@ -1,0 +1,67 @@
+.expense-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 60px - 100px); /* 60px nav + 100px footer */
+    padding: 3rem 1.5rem;
+}
+
+.expense-container {
+    max-width: 480px;
+    width: 100%;
+}
+
+.expense-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.expense-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+}
+
+.expense-subtitle {
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+}
+
+.expense-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+}
+
+.expense-back {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--ink-muted);
+    margin-top: 1.25rem;
+}
+
+.expense-back a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.expense-back a:hover { text-decoration: underline; }
+
+.form-optional {
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    font-weight: 400;
+}
+
+.expense-error {
+    background: var(--danger-light);
+    color: var(--danger);
+    border: 1px solid var(--danger);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    margin-bottom: 1.25rem;
+}

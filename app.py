@@ -1,10 +1,10 @@
 import sqlite3
 from datetime import datetime
 
-from flask import Flask, abort, redirect, render_template, request, session, url_for
+from flask import Flask, abort, flash, redirect, render_template, request, session, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from database.db import create_user, get_user_by_email, init_db, seed_db
+from database.db import add_expense as db_add_expense, create_user, get_user_by_email, init_db, seed_db
 from database.queries import (
     get_user_by_id as queries_get_user_by_id,
     get_summary_stats,
@@ -14,6 +14,8 @@ from database.queries import (
 
 app = Flask(__name__)
 app.secret_key = "dev-secret-change-in-prod"
+
+CATEGORIES = ["Food", "Transport", "Bills", "Health", "Entertainment", "Shopping", "Other"]
 
 with app.app_context():
     init_db()
@@ -131,9 +133,65 @@ def profile():
     )
 
 
-@app.route("/expenses/add")
+@app.route("/analytics")
+def analytics():
+    if not session.get("user_id"):
+        return redirect(url_for("login"))
+    return render_template("analytics.html")
+
+
+@app.route("/expenses/add", methods=["GET", "POST"])
 def add_expense():
-    return "Add expense — coming in Step 7"
+    if not session.get("user_id"):
+        return redirect(url_for("login"))
+
+    if request.method == "POST":
+        amount_raw  = request.form.get("amount", "").strip()
+        category    = request.form.get("category", "").strip()
+        date_raw    = request.form.get("date", "").strip()
+        raw_desc    = request.form.get("description", "").strip()
+        description = raw_desc or None
+
+        error = None
+        amount = None
+        date = None
+
+        try:
+            amount = float(amount_raw)
+            if amount <= 0:
+                error = "Amount must be greater than zero."
+            elif amount > 1_000_000:
+                error = "Amount cannot exceed 1,000,000."
+        except ValueError:
+            error = "Amount must be a valid number."
+
+        if not error and description and len(description) > 200:
+            error = "Description must be 200 characters or fewer."
+
+        if not error and category not in CATEGORIES:
+            error = "Please select a valid category."
+
+        if not error:
+            if date_raw:
+                date = _valid_date(date_raw)
+                if date is None:
+                    error = "Date must be a valid date (YYYY-MM-DD)."
+            else:
+                date = datetime.now().strftime("%Y-%m-%d")
+
+        if error:
+            return render_template(
+                "expenses/add.html",
+                error=error,
+                categories=CATEGORIES,
+                form_data=request.form,
+            )
+
+        db_add_expense(session["user_id"], amount, category, date, description)
+        flash("Expense added successfully.", "success")
+        return redirect(url_for("profile"))
+
+    return render_template("expenses/add.html", categories=CATEGORIES)
 
 
 @app.route("/expenses/<int:id>/edit")
@@ -147,4 +205,5 @@ def delete_expense(id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    import os
+    app.run(debug=os.environ.get("FLASK_DEBUG", "0") == "1", port=5001)

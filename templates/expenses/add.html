@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Add Expense — Spendly{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/add-expense.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="expense-section">
+    <div class="expense-container">
+
+        <div class="expense-header">
+            <h1 class="expense-title">Add Expense</h1>
+            <p class="expense-subtitle">Record a new expense to your account</p>
+        </div>
+
+        <div class="expense-card">
+            {% if error %}
+            <div class="expense-error">{{ error }}</div>
+            {% endif %}
+
+            <form method="POST" action="{{ url_for('add_expense') }}">
+
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="text" id="amount" name="amount"
+                           class="form-input" placeholder="0.00"
+                           value="{{ form_data.get('amount', '') if form_data else '' }}"
+                           autofocus required>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" class="form-input" required>
+                        <option value="" disabled {% if not (form_data and form_data.get('category')) %}selected{% endif %}>
+                            Select a category
+                        </option>
+                        {% for cat in categories %}
+                        <option value="{{ cat }}"
+                            {% if form_data and form_data.get('category') == cat %}selected{% endif %}>
+                            {{ cat }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Date <span class="form-optional">(leave blank for today)</span></label>
+                    <input type="date" id="date" name="date"
+                           class="form-input"
+                           value="{{ form_data.get('date', '') if form_data else '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description <span class="form-optional">(optional)</span></label>
+                    <input type="text" id="description" name="description"
+                           class="form-input" placeholder="e.g. Lunch at canteen"
+                           maxlength="200"
+                           value="{{ form_data.get('description', '') if form_data else '' }}">
+                </div>
+
+                <button type="submit" class="btn-submit">Save Expense</button>
+            </form>
+        </div>
+
+        <p class="expense-back">
+            <a href="{{ url_for('profile') }}">&larr; Back to profile</a>
+        </p>
+
+    </div>
+</section>
+{% endblock %}

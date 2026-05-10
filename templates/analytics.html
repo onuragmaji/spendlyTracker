@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Analytics — Spendly{% endblock %}
+
+{% block content %}
+<section class="cs-section">
+    <div class="cs-inner">
+        <span class="hero-badge">Coming Soon</span>
+        <h1 class="cs-title">Analytics</h1>
+        <p class="cs-subtitle">
+            Powerful insights into your spending are on the way. Track trends, spot patterns,
+            and understand exactly where your money goes — all in one place.
+        </p>
+
+        <div class="cs-cards">
+            <div class="cs-card">
+                <div class="cs-card-preview">
+                    <div class="mock-bars">
+                        <div class="mock-bar-row">
+                            <span class="mock-cat">Food</span>
+                            <div class="mock-bar-track"><div class="mock-bar" style="width:72%"></div></div>
+                            <span class="mock-amt">₹7,200</span>
+                        </div>
+                        <div class="mock-bar-row">
+                            <span class="mock-cat">Travel</span>
+                            <div class="mock-bar-track"><div class="mock-bar mock-bar-2" style="width:48%"></div></div>
+                            <span class="mock-amt">₹4,800</span>
+                        </div>
+                        <div class="mock-bar-row">
+                            <span class="mock-cat">Bills</span>
+                            <div class="mock-bar-track"><div class="mock-bar mock-bar-3" style="width:30%"></div></div>
+                            <span class="mock-amt">₹3,000</span>
+                        </div>
+                        <div class="mock-bar-row">
+                            <span class="mock-cat">Other</span>
+                            <div class="mock-bar-track"><div class="mock-bar mock-bar-4" style="width:18%"></div></div>
+                            <span class="mock-amt">₹1,800</span>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="cs-card-title">Category Breakdown</h3>
+                <p class="cs-card-body">See exactly how much you spend in each category every month.</p>
+            </div>
+
+            <div class="cs-card">
+                <div class="cs-card-preview cs-card-preview--trend">
+                    <svg viewBox="0 0 160 60" class="cs-trend-chart" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="cs-grad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#1a472a" stop-opacity="0.15"/>
+                                <stop offset="100%" stop-color="#1a472a" stop-opacity="0"/>
+                            </linearGradient>
+                        </defs>
+                        <polygon
+                            points="0,60 0,50 26,38 53,42 80,20 106,28 133,12 160,18 160,60"
+                            fill="url(#cs-grad)"/>
+                        <polyline
+                            points="0,50 26,38 53,42 80,20 106,28 133,12 160,18"
+                            fill="none" stroke="#1a472a" stroke-width="2.5"
+                            stroke-linejoin="round" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h3 class="cs-card-title">Spending Trends</h3>
+                <p class="cs-card-body">Monthly trend lines to show whether your spending is improving over time.</p>
+            </div>
+
+            <div class="cs-card">
+                <div class="cs-card-preview cs-card-preview--stats">
+                    <div class="cs-stat-row">
+                        <span class="cs-stat-label">This month</span>
+                        <span class="cs-stat-value">₹18,420</span>
+                    </div>
+                    <div class="cs-stat-row">
+                        <span class="cs-stat-label">vs last month</span>
+                        <span class="cs-stat-value cs-stat-value--good">↓ 12%</span>
+                    </div>
+                    <div class="cs-stat-row">
+                        <span class="cs-stat-label">Avg daily</span>
+                        <span class="cs-stat-value">₹614</span>
+                    </div>
+                    <div class="cs-stat-row">
+                        <span class="cs-stat-label">Top category</span>
+                        <span class="cs-stat-value">Food</span>
+                    </div>
+                </div>
+                <h3 class="cs-card-title">Month-over-Month</h3>
+                <p class="cs-card-body">Compare spending across months and track whether your habits are improving.</p>
+            </div>
+        </div>
+
+        <a href="{{ url_for('profile') }}" class="btn-ghost">← Back to Dashboard</a>
+    </div>
+</section>
+{% endblock %}
