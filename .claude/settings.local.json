@@ -11,7 +11,8 @@
       "Read(//tmp/**)",
       "Bash(node *)",
       "mcp__sqlite__describe_table",
-      "mcp__sqlite__read_query"
+      "mcp__sqlite__read_query",
+      "mcp__github__search_repositories"
     ]
   }
 }
